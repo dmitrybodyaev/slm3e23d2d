@@ -1,9 +1,6 @@
-# Tour Agency API
+# API туристического агентства
 
-Простой API для туристического агентства.
+## Установка
 
-## Команды
-
-```bash
-pip install -r requirements.txt
-python app.py
+1. Установите зависимости: pip install -r requirements.txt
+2. Запустите приложение: python app.py
