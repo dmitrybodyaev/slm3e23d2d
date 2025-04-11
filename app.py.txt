@@ -1,0 +1,35 @@
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+tours = [
+    {"id": 1, "destination": "Париж", "price": 1200},
+    {"id": 2, "destination": "Рим", "price": 1000}
+]
+
+bookings = []
+
+@app.route('/tours', methods=['GET'])
+def get_tours():
+    return jsonify(tours)
+
+@app.route('/tours/<int:tour_id>', methods=['GET'])
+def get_tour(tour_id):
+    tour = next((tour for tour in tours if tour["id"] == tour_id), None)
+    if tour:
+        return jsonify(tour)
+    return jsonify({"error": "Тур не найден"}), 404
+
+@app.route('/bookings', methods=['POST'])
+def create_booking():
+    data = request.get_json()
+    booking = {
+        "id": len(bookings) + 1,
+        "tour_id": data["tour_id"],
+        "customer_name": data["customer_name"]
+    }
+    bookings.append(booking)
+    return jsonify(booking), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
